@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Result - AI Guard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 animate__animated animate__fadeInUp">
+            <div class="card shadow-lg result-card">
+                <div class="card-header position-relative">
+                    <div class="result-header-content text-center text-white py-4">
+                        <div class="mb-3 animate__animated animate__flipInX">
+                            {% if prediction == 1 %}
+                                <i class="fas fa-exclamation-triangle fa-3x warning-icon"></i>
+                            {% else %}
+                                <i class="fas fa-shield-check fa-3x success-icon"></i>
+                            {% endif %}
+                        </div>
+                        <h2 class="mb-0">Analysis Results</h2>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    {% if prediction is defined %}
+                    <div class="result-summary text-center mb-4 animate__animated animate__fadeIn">
+                        <div class="result-icon-wrapper mb-3">
+                            {% if prediction == 1 %}
+                                <div class="pulse-ring danger"></div>
+                                <i class="fas fa-exclamation-circle fa-4x text-danger"></i>
+                            {% else %}
+                                <div class="pulse-ring success"></div>
+                                <i class="fas fa-check-circle fa-4x text-success"></i>
+                            {% endif %}
+                        </div>
+                        <h3 class="{% if prediction == 1 %}text-danger{% else %}text-success{% endif %}">
+                            {% if prediction == 1 %}
+                                Potential Scam Detected!
+                            {% else %}
+                                Likely Legitimate Job
+                            {% endif %}
+                        </h3>
+                        <p class="lead mt-3">
+                            {% if prediction == 1 %}
+                                Our AI system has detected suspicious patterns in this job posting that are commonly associated with fraudulent listings. Please exercise caution!
+                            {% else %}
+                                Based on our analysis, this job posting appears to have characteristics consistent with legitimate job opportunities.
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <!-- Risk Score -->
+                    <div class="risk-score-container text-center mb-4 animate__animated animate__fadeIn animate__delay-1s">
+                        {% set confidence = (probability|float * 100)|round|int %}
+                        <div class="circular-progress" data-percentage="{{ confidence }}">
+                            <div class="circular-progress-inner">
+                                <div class="circular-progress-circle">
+                                    <div class="circular-progress-mask full">
+                                        <div class="circular-progress-fill {% if prediction == 1 %}bg-danger{% else %}bg-success{% endif %}"></div>
+                                    </div>
+                                    <div class="circular-progress-mask half">
+                                        <div class="circular-progress-fill {% if prediction == 1 %}bg-danger{% else %}bg-success{% endif %}"></div>
+                                    </div>
+                                </div>
+                                <div class="circular-progress-content">
+                                    <strong>{{ confidence }}%</strong>
+                                    <span>Confidence</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="risk-level mt-3">
+                            Risk Level: 
+                            <span class="badge {% if risk_level == 'high' %}bg-danger{% elif risk_level == 'medium' %}bg-warning{% else %}bg-success{% endif %}">
+                                {{ risk_level|upper }}
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Analysis Details -->
+                    <div class="analysis-details animate__animated animate__fadeIn animate__delay-2s">
+                        <div class="analysis-card mb-4">
+                            <h4 class="analysis-title">
+                                <i class="fas fa-chart-bar me-2"></i>
+                                Detailed Analysis
+                            </h4>
+                            <div class="analysis-content">
+                                <p class="mb-4">{{ risk_explanation|replace('\n', '<br>')|safe }}</p>
+                                
+                                {% if positive_indicators %}
+                                <div class="indicators-section mb-4">
+                                    <h5><i class="fas fa-check-circle text-success me-2"></i>Positive Indicators</h5>
+                                    <div class="list-group">
+                                        {% for indicator in positive_indicators %}
+                                        <div class="list-group-item list-group-item-success animate__animated animate__fadeInLeft animate-delay-{{ loop.index }}">
+                                            <i class="fas fa-check me-2"></i>{{ indicator }}
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if red_flags %}
+                                <div class="indicators-section mb-4">
+                                    <h5><i class="fas fa-exclamation-circle text-danger me-2"></i>Warning Signs</h5>
+                                    <div class="list-group">
+                                        {% for flag in red_flags %}
+                                        <div class="list-group-item list-group-item-danger animate__animated animate__fadeInRight animate-delay-{{ loop.index }}">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>{{ flag }}
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="disclaimer mt-4 text-center animate__animated animate__fadeIn animate__delay-3s">
+                        <p class="text-muted">
+                            <i class="fas fa-info-circle me-2"></i>
+                            This is an automated analysis. Please use it as one of many factors in your job search decision-making process.
+                        </p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mt-4 text-center animate__animated animate__fadeIn animate__delay-3s">
+                        <a href="{{ url_for('check_job') }}" class="btn btn-primary btn-lg action-button">
+                            <i class="fas fa-search me-2"></i>Check Another Job
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.result-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: var(--card-background);
+    color: var(--text-color);
+}
+
+.card-header {
+    background: linear-gradient(45deg, #1a73e8, #0d47a1);
+    padding: 0;
+}
+
+.result-header-content {
+    position: relative;
+    z-index: 2;
+}
+
+.warning-icon {
+    color: #ffd700;
+    animation: shake 0.8s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.success-icon {
+    color: #00e676;
+    animation: bounce 1s ease infinite;
+}
+
+.result-summary {
+    position: relative;
+}
+
+.result-icon-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    animation: pulse 2s ease-out infinite;
+}
+
+.pulse-ring.danger {
+    border: 3px solid rgba(220, 53, 69, 0.5);
+}
+
+.pulse-ring.success {
+    border: 3px solid rgba(40, 167, 69, 0.5);
+}
+
+.circular-progress {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.circular-progress-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.circular-progress-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.circular-progress-mask {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+}
+
+.circular-progress-fill {
+    width: 200%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    transform-origin: 50% 50%;
+    animation: fill-progress 2s ease-out forwards;
+}
+
+.circular-progress-mask.full {
+    transform: rotate(180deg);
+}
+
+.circular-progress-mask.half {
+    transform: rotate(0deg);
+}
+
+.circular-progress-content {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    left: 10%;
+    top: 10%;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+.circular-progress-content strong {
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+.circular-progress-content span {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.analysis-card {
+    background: var(--card-background);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    color: var(--text-color);
+}
+
+.analysis-title {
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.list-group-item {
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: 8px !important;
+    transition: transform 0.2s ease;
+    background-color: var(--card-background);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .list-group-item-success {
+    background-color: rgba(82, 183, 136, 0.2);
+    color: var(--success-color);
+}
+
+[data-theme="dark"] .list-group-item-danger {
+    background-color: rgba(247, 37, 133, 0.2);
+    color: var(--danger-color);
+}
+
+.circular-progress-content {
+    background: var(--card-background);
+    color: var(--text-color);
+}
+
+.circular-progress-content span {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+[data-theme="dark"] .disclaimer {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+@media (max-width: 768px) {
+    .circular-progress {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .circular-progress-content strong {
+        font-size: 2em;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize circular progress
+    const progressElement = document.querySelector('.circular-progress');
+    if (progressElement) {
+        const percentage = progressElement.dataset.percentage;
+        const rotation = (percentage / 100) * 360;
+        document.documentElement.style.setProperty('--progress-rotation', rotation + 'deg');
+    }
+
+    // Add hover effect to list items
+    document.querySelectorAll('.list-group-item').forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(5px)';
+        });
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0)';
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Check URL - AI Guard{% endblock %}
+
+{% block content %}
+{% if not current_user.is_authenticated %}
+    <div class="alert alert-warning animate__animated animate__fadeIn">
+        Please <a href="{{ url_for('login') }}">login</a> to check URLs.
+    </div>
+{% else %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 animate__animated animate__fadeInUp">
+            <div class="card shadow-lg hover-card">
+                <div class="card-header bg-primary text-white position-relative">
+                    <h3 class="text-center mb-0">
+                        <i class="fas fa-link me-2 animate__animated animate__flipInX"></i>
+                        Check Job URL
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="security-icon-wrapper mb-3">
+                            <i class="fas fa-shield-alt fa-3x text-primary animate__animated animate__pulse animate__infinite"></i>
+                        </div>
+                        <p class="lead">Enter the job posting URL below for our AI to analyze its legitimacy</p>
+                    </div>
+                    <form method="POST" action="{{ url_for('check_url') }}" class="url-check-form">
+                        <div class="mb-4 url-input-wrapper">
+                            <label for="job_url" class="form-label">
+                                <i class="fas fa-globe me-2"></i>Job Posting URL*
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-link"></i></span>
+                                <input type="url" 
+                                       class="form-control form-control-lg" 
+                                       id="job_url" 
+                                       name="job_url" 
+                                       required 
+                                       placeholder="https://example.com/job-posting"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg submit-btn">
+                                <i class="fas fa-search me-2"></i>Analyze URL
+                                <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Features Cards -->
+            <div class="row mt-4">
+                <div class="col-md-6 animate__animated animate__fadeInLeft">
+                    <div class="card feature-card mb-3">
+                        <div class="card-body text-center">
+                            <i class="fas fa-bolt text-primary mb-3"></i>
+                            <h5>Instant Analysis</h5>
+                            <p class="mb-0">Get results in seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 animate__animated animate__fadeInRight">
+                    <div class="card feature-card mb-3">
+                        <div class="card-body text-center">
+                            <i class="fas fa-check-circle text-primary mb-3"></i>
+                            <h5>Smart Detection</h5>
+                            <p class="mb-0">Advanced AI verification</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+}
+
+.security-icon-wrapper {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.feature-card i {
+    font-size: 2rem;
+}
+
+.url-input-wrapper input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,0.15);
+    border-color: #0d6efd;
+}
+
+.submit-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13,110,253,0.2);
+}
+
+@keyframes gradientBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.card-header {
+    background: linear-gradient(45deg, #0d6efd, #0099ff);
+    background-size: 200% 200%;
+    animation: gradientBg 15s ease infinite;
+}
+</style>
+
+<script>
+document.querySelector('.url-check-form').addEventListener('submit', function() {
+    const button = this.querySelector('.submit-btn');
+    const spinner = button.querySelector('.spinner-border');
+    button.disabled = true;
+    spinner.classList.remove('d-none');
+});
+</script>
+{% endif %}
+{% endblock %}

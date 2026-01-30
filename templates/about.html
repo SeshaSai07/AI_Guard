@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-12"> <!-- Changed to full width -->
+        <h1 class="display-4 text-center mb-5 animate__animated animate__fadeIn">About AI Guard</h1>
+        
+        <!-- Mission Section -->
+        <div class="card mb-5 hover-shadow animate__animated animate__fadeInUp">
+            <div class="card-body p-5">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2 class="card-title mb-4">Our Mission</h2>
+                        <p class="card-text lead">
+                            AI Guard is dedicated to protecting job seekers from fraudulent job postings using advanced machine learning technology. 
+                            Our system analyzes various aspects of job postings to identify potential scams and help you make informed decisions.
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="fas fa-shield-alt fa-5x text-primary mb-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="card mb-5 hover-shadow animate__animated animate__fadeInUp">
+            <div class="card-body p-5">
+                <h2 class="card-title mb-4">How It Works</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="process-step mb-4">
+                            <i class="fas fa-robot fa-3x text-primary mb-3"></i>
+                            <h4>AI Analysis</h4>
+                            <p>Our AI model has been trained on thousands of real and fake job postings, learning to identify patterns and characteristics 
+                            that are common in fraudulent job listings.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="process-step mb-4">
+                            <i class="fas fa-search fa-3x text-primary mb-3"></i>
+                            <h4>What We Analyze</h4>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Job description language and patterns</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Company information authenticity</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Job requirements and qualifications</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Salary and compensation details</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Communication patterns</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="card mb-5 hover-shadow animate__animated animate__fadeInUp">
+            <div class="card-body p-5">
+                <h2 class="card-title mb-4">Our Technology Stack</h2>
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <div class="tech-card mb-4">
+                            <i class="fas fa-brain fa-3x text-primary mb-3"></i>
+                            <h4>Machine Learning</h4>
+                            <p>Advanced ML algorithms for pattern recognition</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="tech-card mb-4">
+                            <i class="fas fa-database fa-3x text-primary mb-3"></i>
+                            <h4>Data Processing</h4>
+                            <p>Real-time data analysis and verification</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="tech-card mb-4">
+                            <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                            <h4>Security</h4>
+                            <p>Enterprise-grade security protocols</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="tech-card mb-4">
+                            <i class="fas fa-cloud fa-3x text-primary mb-3"></i>
+                            <h4>Cloud Infrastructure</h4>
+                            <p>Scalable cloud-based solutions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="card mb-5 hover-shadow animate__animated animate__fadeInUp">
+            <div class="card-body p-5">
+                <h2 class="card-title mb-4">Meet Our Team</h2>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p class="lead mb-4">
+                            We are a team of passionate professionals dedicated to making job searching safer for everyone.
+                            Our experts combine years of experience in machine learning, cybersecurity, and job market analysis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="card mb-5 hover-shadow animate__animated animate__fadeInUp">
+            <div class="card-body p-5">
+                <h2 class="card-title mb-4">Get in Touch</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="contact-info mb-4">
+                            <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
+                            <h4>Email Us</h4>
+                            <p>support@aiguard.com</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="contact-info mb-4">
+                            <i class="fas fa-comments fa-2x text-primary mb-3"></i>
+                            <h4>Live Chat</h4>
+                            <p>Available 24/7 for your questions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add custom styles -->
+<style>
+.hover-shadow {
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.process-step, .tech-card, .contact-info {
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.process-step:hover, .tech-card:hover, .contact-info:hover {
+    transform: translateY(-5px);
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.list-unstyled li {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.lead {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+</style>
+{% endblock %}

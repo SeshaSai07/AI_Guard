@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10 text-center"> <!-- Increased width from col-md-8 to col-md-10 -->
+        <h1 class="display-4 mb-4 animate__animated animate__fadeIn">Welcome to AI Guard</h1>
+        <p class="lead animate__animated animate__fadeIn animate__delay-1s">Protect yourself from fake job postings using our advanced AI detection system.</p>
+        
+        <!-- Main Cards -->
+        <div class="row mt-5">
+            <div class="col-md-6 animate__animated animate__fadeInLeft">
+                <div class="card mb-4 h-100 hover-shadow">
+                    <div class="card-body">
+                        <i class="fas fa-search-dollar fa-3x mb-3 text-primary"></i>
+                        <h5 class="card-title">Check Job Posting</h5>
+                        <p class="card-text">Analyze a job posting content to detect if it's legitimate or fraudulent using our AI model.</p>
+                        <a href="{{ url_for('check_job') }}" class="btn btn-primary btn-lg">Check Job</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 animate__animated animate__fadeInRight">
+                <div class="card mb-4 h-100 hover-shadow">
+                    <div class="card-body">
+                        <i class="fas fa-link fa-3x mb-3 text-primary"></i>
+                        <h5 class="card-title">Check URL</h5>
+                        <p class="card-text">Verify if a job posting URL is safe and legitimate before applying.</p>
+                        <a href="{{ url_for('check_url') }}" class="btn btn-primary btn-lg">Check URL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="row mt-5 animate__animated animate__fadeIn">
+            <div class="col-12">
+                <h2 class="mb-4">AI Guard Impact</h2>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card p-4 bg-light rounded-lg">
+                    <h3 class="counter">98%</h3>
+                    <p>Accuracy Rate</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card p-4 bg-light rounded-lg">
+                    <h3 class="counter">10,000+</h3>
+                    <p>Jobs Analyzed</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card p-4 bg-light rounded-lg">
+                    <h3 class="counter">5,000+</h3>
+                    <p>Users Protected</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="mb-4">Our Services</h2>
+            </div>
+            <div class="col-md-4">
+                <div class="service-card p-4 hover-shadow">
+                    <i class="fas fa-shield-alt fa-2x mb-3 text-primary"></i>
+                    <h5>Fraud Detection</h5>
+                    <p>Our AI algorithms analyze multiple aspects of job postings including content, company information, and communication patterns to identify potential scams.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-card p-4 hover-shadow">
+                    <i class="fas fa-bolt fa-2x mb-3 text-primary"></i>
+                    <h5>Real-time Analysis</h5>
+                    <p>Get instant results with our high-performance machine learning model, trained on thousands of verified job postings.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-card p-4 hover-shadow">
+                    <i class="fas fa-history fa-2x mb-3 text-primary"></i>
+                    <h5>24/7 Protection</h5>
+                    <p>Continuous monitoring and updates to our AI model ensure you're protected against the latest job scam tactics.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="mb-4">Key Features</h2>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card p-4 hover-shadow">
+                    <i class="fas fa-robot fa-2x mb-3 text-primary"></i>
+                    <h6>AI-Powered</h6>
+                    <p>Advanced machine learning algorithms</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card p-4 hover-shadow">
+                    <i class="fas fa-chart-line fa-2x mb-3 text-primary"></i>
+                    <h6>High Accuracy</h6>
+                    <p>98% detection rate</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card p-4 hover-shadow">
+                    <i class="fas fa-user-shield fa-2x mb-3 text-primary"></i>
+                    <h6>User Privacy</h6>
+                    <p>Secure data handling</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card p-4 hover-shadow">
+                    <i class="fas fa-tachometer-alt fa-2x mb-3 text-primary"></i>
+                    <h6>Fast Results</h6>
+                    <p>Instant analysis</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Use AI Guard Section -->
+        <div class="row mt-5 mb-5">
+            <div class="col-md-12">
+                <div class="card hover-shadow">
+                    <div class="card-body p-5">
+                        <i class="fas fa-question-circle fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title">Why Choose AI Guard?</h3>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-check-circle text-success"></i> Advanced Technology</h5>
+                                <p>Our machine learning model is continuously trained on the latest job posting data to maintain high accuracy.</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-check-circle text-success"></i> Comprehensive Analysis</h5>
+                                <p>We analyze multiple factors including content, company verification, and common scam patterns.</p>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-check-circle text-success"></i> User-Friendly</h5>
+                                <p>Simple interface designed for quick and easy job posting verification.</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-check-circle text-success"></i> Regular Updates</h5>
+                                <p>Our system is constantly updated to protect against new scam techniques.</p>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('about') }}" class="btn btn-lg btn-outline-primary mt-4">Learn More About Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

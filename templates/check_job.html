@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Check Job - AI Guard{% endblock %}
+
+{% block content %}
+{% if not current_user.is_authenticated %}
+    <div class="alert alert-warning animate__animated animate__fadeIn">
+        Please <a href="{{ url_for('login') }}">login</a> to check job postings.
+    </div>
+{% else %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 animate__animated animate__fadeInUp">
+            <div class="card shadow-lg hover-card">
+                <div class="card-header bg-primary text-white position-relative">
+                    <h3 class="text-center mb-0">
+                        <i class="fas fa-briefcase me-2 animate__animated animate__flipInX"></i>
+                        Check Job Posting
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="security-icon-wrapper mb-3">
+                            <i class="fas fa-shield-alt fa-3x text-primary animate__animated animate__pulse animate__infinite"></i>
+                        </div>
+                        <p class="lead">Enter the job posting details below for our AI to analyze its legitimacy</p>
+                    </div>
+                    <form method="POST" action="{{ url_for('check_job') }}" class="job-check-form">
+                        <!-- Essential Information Section -->
+                        <div class="section-card mb-4 animate__animated animate__fadeIn">
+                            <h5 class="section-title"><i class="fas fa-info-circle me-2"></i>Essential Information</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="job_title" name="job_title" required>
+                                        <label for="job_title">Job Title*</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="company_name" name="company_name" required>
+                                        <label for="company_name">Company Name*</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="job_location" name="job_location" required>
+                                <label for="job_location">Job Location*</label>
+                            </div>
+                        </div>
+
+                        <!-- Job Details Section -->
+                        <div class="section-card mb-4 animate__animated animate__fadeIn" style="animation-delay: 0.2s">
+                            <h5 class="section-title"><i class="fas fa-file-alt me-2"></i>Job Details</h5>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="job_description" name="job_description" style="height: 120px" required></textarea>
+                                <label for="job_description">Job Description*</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="requirements" name="requirements" style="height: 100px" required></textarea>
+                                <label for="requirements">Requirements*</label>
+                            </div>
+                        </div>
+
+                        <!-- Compensation Section -->
+                        <div class="section-card mb-4 animate__animated animate__fadeIn" style="animation-delay: 0.4s">
+                            <h5 class="section-title"><i class="fas fa-money-bill-wave me-2"></i>Compensation & Benefits</h5>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="salary_range" name="salary_range">
+                                <label for="salary_range">Salary Range</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="benefits" name="benefits" style="height: 80px"></textarea>
+                                <label for="benefits">Benefits</label>
+                            </div>
+                        </div>
+
+                        <!-- Employment Details Section -->
+                        <div class="section-card mb-4 animate__animated animate__fadeIn" style="animation-delay: 0.6s">
+                            <h5 class="section-title"><i class="fas fa-building me-2"></i>Employment Details</h5>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="employment_type" name="employment_type">
+                                    <option value="">Select employment type</option>
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Part-time">Part-time</option>
+                                    <option value="Contract">Contract</option>
+                                    <option value="Temporary">Temporary</option>
+                                    <option value="Internship">Internship</option>
+                                </select>
+                                <label for="employment_type">Employment Type</label>
+                            </div>
+                        </div>
+
+                        <!-- Contact Section -->
+                        <div class="section-card mb-4 animate__animated animate__fadeIn" style="animation-delay: 0.8s">
+                            <h5 class="section-title"><i class="fas fa-envelope me-2"></i>Contact & Application</h5>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="contact_info" name="contact_info" style="height: 80px"></textarea>
+                                <label for="contact_info">Contact Information</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="application_method" name="application_method" style="height: 80px"></textarea>
+                                <label for="application_method">Application Method</label>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg submit-btn">
+                                <i class="fas fa-search me-2"></i>Analyze Job Posting
+                                <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+}
+
+.security-icon-wrapper {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.section-card:hover {
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.section-title {
+    color: #0d6efd;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-floating > .form-control,
+.form-floating > .form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-floating > .form-control:focus,
+.form-floating > .form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,0.15);
+}
+
+.submit-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13,110,253,0.2);
+}
+
+@keyframes gradientBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.card-header {
+    background: linear-gradient(45deg, #0d6efd, #0099ff);
+    background-size: 200% 200%;
+    animation: gradientBg 15s ease infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-card {
+        padding: 15px;
+    }
+    
+    .form-floating > label {
+        font-size: 0.9rem;
+    }
+}
+</style>
+
+<script>
+document.querySelector('.job-check-form').addEventListener('submit', function() {
+    const button = this.querySelector('.submit-btn');
+    const spinner = button.querySelector('.spinner-border');
+    button.disabled = true;
+    spinner.classList.remove('d-none');
+});
+
+// Add subtle animation to form sections on scroll
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    document.querySelectorAll('.section-card').forEach((section) => {
+        section.style.opacity = 0;
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'all 0.5s ease-out';
+        observer.observe(section);
+    });
+});
+</script>
+{% endif %}
+{% endblock %}
