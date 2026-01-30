@@ -1,13 +1,5 @@
 services:
   - type: web
     name: ai-guard
-    env: python
-    buildCommand: |
-      apt-get update && apt-get install -y \
-      build-essential \
-      cmake \
-      libgl1 \
-      libglib2.0-0 \
-      && pip install --upgrade pip setuptools wheel \
-      && pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    env: docker
+    plan: free
